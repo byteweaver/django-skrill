@@ -225,3 +225,7 @@ class StatusReport(models.Model):
     custom_field_5 = models.CharField("Custom field 5", max_length=240, blank=True, null=True,
         help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
 
+    @property
+    def transaction_id(self):
+        return self.request_id
+
