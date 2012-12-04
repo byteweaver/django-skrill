@@ -181,3 +181,47 @@ class Request(models.Model):
         else:
             return res
 
+
+class StatusReport(models.Model):
+    # custom fields
+    time = models.DateTimeField("Time", auto_now_add=True)
+
+    # Skrill fields
+    pay_to_email = models.EmailField("Merchant Email", max_length=50, default=PAY_TO_EMAIL,
+        help_text="Email address of the Merchant's moneybookers.com account.")
+    pay_from_email = models.EmailField("Customer Email", max_length=50,
+        help_text="Email address of the customer who is making the payment, i.e. sending the money.")
+    merchant_id = models.PositiveIntegerField("Merchant ID",
+        help_text="Unique ID for the Merchant's moneybookers.com account.")
+    customer_id = models.PositiveIntegerField("Customer ID", null=True, blank=True,
+        help_text="Unique ID for the customer's moneybookers.com account.")
+    request = models.ForeignKey(Request, help_text="Request object directly mapped via incoming transaction_id")
+    mb_transaction_id = models.PositiveIntegerField("Skrill transaction ID",
+        help_text="Moneybookers' unique transaction ID for the transfer.")
+    mb_amount = models.DecimalField("MB Amount", max_digits=18, decimal_places=2,
+        help_text="The total amount of the payment in Merchant's currency.")
+    mb_currency = models.CharField("MB Currency", max_length=3, choices=ISO4217,
+        help_text="Currency of mb_amount. Will always be the same as the currency of the beneficiary's account at Skrill (Moneybookers).")
+    status = models.IntegerField("Status", choices=STATUS_CHOICES,
+        help_text="Status of the transaction.")
+    failed_reason_code = models.CharField("Failed reason code", max_length=2, choices=FAILED_REASON_CODES, blank=True, null=True,
+        help_text="If the transaction is with status -2 (failed), this field will contain a code detailing the reason for the failure.")
+    md5sig = models.CharField("MD5 signature", max_length=32)
+    sha2sig = models.CharField("SHA2 signature", max_length=64, null=True, blank=True)
+    amount = models.DecimalField("Amount", max_digits=18, decimal_places=2,
+        help_text="Amount of the payment as posted by the Merchant on the entry form.")
+    currency = models.CharField("Currency", max_length=3, choices=ISO4217,
+        help_text="Currency of the payment as posted by the Merchant on the entry form")
+    payment_type = models.CharField("Payment type", max_length=10, blank=True, null=True,
+        help_text="The payment instrument used by the customer on the Gateway.")
+    custom_field_1 = models.CharField("Custom field 1", max_length=240, blank=True, null=True,
+        help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
+    custom_field_2 = models.CharField("Custom field 2", max_length=240, blank=True, null=True,
+        help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
+    custom_field_3 = models.CharField("Custom field 3", max_length=240, blank=True, null=True,
+        help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
+    custom_field_4 = models.CharField("Custom field 4", max_length=240, blank=True, null=True,
+        help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
+    custom_field_5 = models.CharField("Custom field 5", max_length=240, blank=True, null=True,
+        help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
+
