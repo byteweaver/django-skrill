@@ -9,12 +9,13 @@ from skrill.settings import *
 
 class Request(models.Model):
     # list of custom fields that will be ignored upon submit
-    SUBMIT_IGNORE_FIELDS = ['user', 'time', 'is_test']
+    SUBMIT_IGNORE_FIELDS = ['user', 'time', 'is_test', 'is_submitted']
 
     # custom stuff
     user = models.ForeignKey(User, verbose_name="User")
     time = models.DateTimeField("Time", auto_now_add=True)
     is_test = models.BooleanField("Is test", default=False)
+    is_submitted = models.BooleanField("Is submitted", default=False, editable=False)
 
     # merchant details
     transaction_id = models.AutoField("Transaction ID", primary_key=True,
@@ -156,6 +157,8 @@ class Request(models.Model):
 
     def submit(self):
         assert self.pk != None, "Save Request before submitting!"
+        assert self.is_submitted == False, "Request already submitted!"
+        self.is_submitted = True
 
         data = {}
         for field in self._meta.get_all_field_names():
