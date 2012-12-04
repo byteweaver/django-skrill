@@ -8,8 +8,7 @@ class Request(models.Model):
     # custom stuff
     user = models.ForeignKey(User, verbose_name="User")
     time = models.DateTimeField("Time", auto_now_add=True)
-    is_test = models.BooleanField("Is test", default=False,
-        help_text="If set to True, the request will be send to TEST_API_URL.")
+    is_test = models.BooleanField("Is test", default=False)
 
     # merchant details
     transaction_id = models.AutoField("Transaction ID", primary_key=True,
