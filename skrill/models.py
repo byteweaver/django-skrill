@@ -54,15 +54,15 @@ class Request(models.Model):
         help_text="Merchants can pass the unique referral ID or email of the affiliate from which the customer is referred. The rid value must be included within the actual payment request.")
     ext_ref_id = models.CharField("Extra Referral ID", max_length=100, blank=True, null=True,
         help_text="Merchants can pass additional identifier in this field in order to track affiliates. You MUST inform your account manager about the exact value that will be submitted so that affiliates can be tracked.")
-    custom_field_1 = models.CharField("Extra field 1", max_length=240, blank=True, null=True,
+    custom_field_1 = models.CharField("Custom field 1", max_length=240, blank=True, null=True,
         help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
-    custom_field_2 = models.CharField("Extra field 2", max_length=240, blank=True, null=True,
+    custom_field_2 = models.CharField("Custom field 2", max_length=240, blank=True, null=True,
         help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
-    custom_field_3 = models.CharField("Extra field 3", max_length=240, blank=True, null=True,
+    custom_field_3 = models.CharField("Custom field 3", max_length=240, blank=True, null=True,
         help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
-    custom_field_4 = models.CharField("Extra field 4", max_length=240, blank=True, null=True,
+    custom_field_4 = models.CharField("Custom field 4", max_length=240, blank=True, null=True,
         help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
-    custom_field_5 = models.CharField("Extra field 5", max_length=240, blank=True, null=True,
+    custom_field_5 = models.CharField("Custom field 5", max_length=240, blank=True, null=True,
         help_text="One of 5 custom fields, see \"merchant_fields\" in the Skrill documentation")
 
     # customer details
