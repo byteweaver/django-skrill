@@ -156,6 +156,7 @@ class Request(models.Model):
             return field_value
 
     def submit(self, force_submit=False):
+        assert self.prepare_only == True, "Use this only with prepare_only = True"
         assert self.pk != None, "Save Request before submitting!"
         if not force_submit:
             assert self.is_submitted == False, "Request already submitted!"
