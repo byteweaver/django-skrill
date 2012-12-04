@@ -129,3 +129,22 @@ class Request(models.Model):
 
     def __unicode__(self):
         return "#%s %s %s" % (self.transaction_id, self.user, self.time)
+
+    def _format_boolean(self, value):
+        if value:
+            return 1
+        else:
+            return 0
+
+    def _get_formatted_field_value(self, field):
+        field_class = self._meta.get_field(field).__class__
+        field_value = getattr(self, field)
+        if field_class == models.BooleanField:
+            return self._format_boolean(field_value)
+        elif field_class == models.DateField:
+            return field_value.strftime("%d%m%Y")
+        elif field_class == models.DecimalField:
+            return str(field_value)
+        else:
+            return field_value
+
