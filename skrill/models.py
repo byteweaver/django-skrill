@@ -7,7 +7,7 @@ from django.db import models
 from skrill.settings import *
 
 
-class Request(models.Model):
+class PaymentRequest(models.Model):
     # list of custom fields that will be ignored upon submit
     SUBMIT_IGNORE_FIELDS = ['user', 'time', 'is_test', 'is_submitted']
 
@@ -158,9 +158,9 @@ class Request(models.Model):
     def submit(self, force_submit=False):
         """Submit model content to skrill and return session ID on success."""
         assert self.prepare_only == True, "Use this only with prepare_only = True"
-        assert self.pk != None, "Save Request before submitting!"
+        assert self.pk != None, "Save PaymentRequest before submitting!"
         if not force_submit:
-            assert self.is_submitted == False, "Request already submitted!"
+            assert self.is_submitted == False, "PaymentRequest already submitted!"
         self.is_submitted = True
         self.save()
 
@@ -195,7 +195,7 @@ class StatusReport(models.Model):
         help_text="Unique ID for the Merchant's moneybookers.com account.")
     customer_id = models.PositiveIntegerField("Customer ID", null=True, blank=True,
         help_text="Unique ID for the customer's moneybookers.com account.")
-    request = models.ForeignKey(Request, help_text="Request object directly mapped via incoming transaction_id")
+    payment_request = models.ForeignKey(PaymentRequest, help_text="PaymentRequest object directly mapped via incoming transaction_id")
     mb_transaction_id = models.PositiveIntegerField("Skrill transaction ID",
         help_text="Moneybookers' unique transaction ID for the transfer.")
     mb_amount = models.DecimalField("MB Amount", max_digits=18, decimal_places=2,
@@ -232,5 +232,5 @@ class StatusReport(models.Model):
 
     @property
     def transaction_id(self):
-        return self.request_id
+        return self.payment_request_id
 
