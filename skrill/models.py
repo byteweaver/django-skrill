@@ -155,10 +155,12 @@ class Request(models.Model):
         else:
             return field_value
 
-    def submit(self):
+    def submit(self, force_submit=False):
         assert self.pk != None, "Save Request before submitting!"
-        assert self.is_submitted == False, "Request already submitted!"
+        if not force_submit:
+            assert self.is_submitted == False, "Request already submitted!"
         self.is_submitted = True
+        self.save()
 
         data = {}
         for field in self._meta.get_all_field_names():
