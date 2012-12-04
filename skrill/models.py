@@ -1,3 +1,6 @@
+import urllib
+import urllib2
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -5,6 +8,9 @@ from skrill.settings import *
 
 
 class Request(models.Model):
+    # list of custom fields that will be ignored upon submit
+    SUBMIT_IGNORE_FIELDS = ['user', 'time', 'is_test']
+
     # custom stuff
     user = models.ForeignKey(User, verbose_name="User")
     time = models.DateTimeField("Time", auto_now_add=True)
@@ -147,4 +153,24 @@ class Request(models.Model):
             return str(field_value)
         else:
             return field_value
+
+    def submit(self):
+        assert self.pk != None, "Save Request before submitting!"
+
+        data = {}
+        for field in self._meta.get_all_field_names():
+            if field in self.SUBMIT_IGNORE_FIELDS:
+                continue
+            field_value = getattr(self, field)
+            if not field_value is None and field_value != '':
+                data[field] = self._get_formatted_field_value(field)
+
+        req = urllib2.Request(url=API_URL, data=urllib.urlencode(data))
+        res = urllib2.urlopen(req).read()
+        # Unfortunately Skrill sends HTTP 200 no matter if the request failed or not.
+        # In case of error they reply with one big html page. So we test if the result is a session id with length 32
+        if len(res) != 32:
+            raise Exception(res)
+        else:
+            return res
 
