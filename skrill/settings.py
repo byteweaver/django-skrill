@@ -3,7 +3,6 @@ from django.conf import settings
 
 # settings that normaly need no change
 API_URL = getattr(settings, "SKRILL_API_URL", "https://www.moneybookers.com/app/payment.pl")
-TEST_API_URL = getattr(settings, "SKRILL_TEST_API_URL", "http://www.moneybookers.com/app/test_payment.pl")
 
 # mandatory settings
 PAY_TO_EMAIL = getattr(settings, "SKRILL_PAY_TO_EMAIL", None)
