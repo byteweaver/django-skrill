@@ -128,3 +128,5 @@ class Request(models.Model):
         verbose_name_plural = "Payment requests"
         ordering = ['time']
 
+    def __unicode__(self):
+        return "#%s %s %s" % (self.transaction_id, self.user, self.time)
