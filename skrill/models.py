@@ -123,3 +123,8 @@ class Request(models.Model):
     detail5_text = models.CharField("Detail 5 text", max_length=240, blank=True, null=True,
         help_text="The detail5_text is shown next to the detail5_description. The detail5_text is also shown to the client in his history at Skrill (Moneybookers)' website.")
 
+    class Meta:
+        verbose_name = "Payment request"
+        verbose_name_plural = "Payment requests"
+        ordering = ['time']
+
