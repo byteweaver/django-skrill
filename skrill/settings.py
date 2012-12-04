@@ -53,6 +53,14 @@ TITLE_CHOICES = (
     ('Ms', 'Ms'),
 )
 
+STATUS_CHOICES = (
+    (-3, 'Chargeback'),
+    (-2, 'Failed'),
+    (-1, 'Cancelled'),
+    (0, 'Pending'),
+    (2, 'Processed'),
+)
+
 # Thanks to https://github.com/mikery/django-moneybookers for the following lists
 ISO4217 = (
     ('EUR', 'Euro'),
