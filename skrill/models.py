@@ -1,9 +1,11 @@
+import hashlib
 import urllib
 import urllib2
 
 from django.contrib.auth.models import User
 from django.db import models
 
+from skrill import get_secret_word_as_md5
 from skrill.settings import *
 
 
@@ -255,4 +257,16 @@ class StatusReport(models.Model):
     @property
     def transaction_id(self):
         return self.payment_request_id
+
+    def validate_md5sig(self):
+        m = hashlib.md5()
+        m.update(str(self.merchant_id))
+        m.update(str(self.transaction_id))
+        m.update(get_secret_word_as_md5())
+        m.update(str(self.mb_amount))
+        m.update(self.mb_currency)
+        m.update(str(self.status))
+
+        if m.hexdigest().upper() != self.md5sig:
+            raise StatusReport.InvalidMD5Signature(self)
 
