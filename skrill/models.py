@@ -246,6 +246,12 @@ class StatusReport(models.Model):
         verbose_name_plural = "Status reports"
         ordering = ['time']
 
+    class InvalidMD5Signature(Exception):
+        def __init__(self, status_report):
+            self.status_report = status_report
+        def __str__(self):
+            return "Invalid MD5 signature in status report #%d" % self.status_report.pk
+
     @property
     def transaction_id(self):
         return self.payment_request_id
