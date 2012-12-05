@@ -4,6 +4,7 @@ import urllib2
 
 from django.contrib.auth.models import User
 from django.db import models
+import django.dispatch
 
 from skrill import get_secret_word_as_md5
 from skrill.settings import *
@@ -204,6 +205,7 @@ class StatusReport(models.Model):
     # custom fields
     time = models.DateTimeField("Time", auto_now_add=True)
     valid = models.BooleanField("Valid", default=False)
+    signal_sent = models.BooleanField("Signal sent", default=False)
 
     # Skrill fields
     pay_to_email = models.EmailField("Merchant Email", max_length=50, default=PAY_TO_EMAIL,
@@ -272,4 +274,27 @@ class StatusReport(models.Model):
     def validate_md5sig(self):
         if self.generate_md5_signature() != self.md5sig:
             raise StatusReport.InvalidMD5Signature(self)
+
+    def send_signal(self, force=False):
+        if not self.valid:
+            return
+        if self.signal_sent and not force:
+            return
+        if self.status == -3:
+            skrill_status_chargeback.send(sender=self)
+        elif self.status == -2:
+            skrill_status_failed.send(sender=self)
+        elif self.status == -1:
+            skrill_status_cancelled.send(sender=self)
+        elif self.status == 0:
+            skrill_status_pending.send(sender=self)
+        elif self.status == 2:
+            skrill_status_processed.send(sender=self)
+
+
+skrill_status_chargeback = django.dispatch.Signal()
+skrill_status_failed = django.dispatch.Signal()
+skrill_status_cancelled = django.dispatch.Signal()
+skrill_status_pending = django.dispatch.Signal()
+skrill_status_processed = django.dispatch.Signal()
 
