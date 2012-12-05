@@ -40,6 +40,7 @@ if not settings.configured:
             }
         },
         INSTALLED_APPS=INSTALLED_APPS,
+        ROOT_URLCONF='skrill.tests.urls',
         COVERAGE_MODULE_EXCLUDES=COVERAGE_MODULE_EXCLUDES,
         COVERAGE_REPORT_HTML_OUTPUT_DIR=os.path.join(
             os.path.dirname(__file__), 'coverage'),
