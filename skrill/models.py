@@ -9,13 +9,13 @@ from skrill.settings import *
 
 class PaymentRequest(models.Model):
     # list of custom fields that will be ignored upon submit
-    SUBMIT_IGNORE_FIELDS = ['user', 'time', 'is_test', 'is_submitted']
+    SUBMIT_IGNORE_FIELDS = ['user', 'time', 'test', 'submitted']
 
     # custom stuff
     user = models.ForeignKey(User, verbose_name="User")
     time = models.DateTimeField("Time", auto_now_add=True)
-    is_test = models.BooleanField("Is test", default=False)
-    is_submitted = models.BooleanField("Is submitted", default=False, editable=False)
+    test = models.BooleanField("Is test", default=False)
+    submitted = models.BooleanField("Is submitted", default=False, editable=False)
 
     # merchant details
     transaction_id = models.AutoField("Transaction ID", primary_key=True,
@@ -160,8 +160,8 @@ class PaymentRequest(models.Model):
         assert self.prepare_only == True, "Use this only with prepare_only = True"
         assert self.pk != None, "Save PaymentRequest before submitting!"
         if not force_submit:
-            assert self.is_submitted == False, "PaymentRequest already submitted!"
-        self.is_submitted = True
+            assert self.submitted == False, "PaymentRequest already submitted!"
+        self.submitted = True
         self.save()
 
         data = {}
