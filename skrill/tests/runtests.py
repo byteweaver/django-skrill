@@ -42,8 +42,11 @@ if not settings.configured:
         INSTALLED_APPS=INSTALLED_APPS,
         COVERAGE_MODULE_EXCLUDES=COVERAGE_MODULE_EXCLUDES,
         COVERAGE_REPORT_HTML_OUTPUT_DIR=os.path.join(
-            os.path.dirname(__file__), 'coverage')
-    )
+            os.path.dirname(__file__), 'coverage'),
+        # skrill settings
+        SKRILL_PAY_TO_EMAIL = "me@example.com",
+        SKRILL_SECRET_WORD = "Iamsecret",
+   )
 
 
 from django_coverage.coverage_runner import CoverageRunner
