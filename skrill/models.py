@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.db import models
 import django.dispatch
 
-from skrill import get_secret_word_as_md5
+from skrill.settings import get_secret_word_as_md5
 from skrill.settings import *
 
 

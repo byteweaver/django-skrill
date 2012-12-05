@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import hashlib
+
 from django.conf import settings
 
 # settings that normaly need no change
@@ -7,6 +9,12 @@ API_URL = getattr(settings, "SKRILL_API_URL", "https://www.moneybookers.com/app/
 # mandatory settings
 PAY_TO_EMAIL = getattr(settings, "SKRILL_PAY_TO_EMAIL", None)
 SECRET_WORD = getattr(settings, "SKRILL_SECRET_WORD", '')
+
+def get_secret_word_as_md5():
+    """returns md5 hash of SECRET_WORD in upper case"""
+    m = hashlib.md5()
+    m.update(SECRET_WORD)
+    return m.hexdigest().upper()
 
 # optional default settings
 RECIPIENT_DESCRIPTION = getattr(settings, "SKRILL_RECIPIENT_DESCRIPTION", None)

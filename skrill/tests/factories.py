@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 import factory
 
-from skrill import get_secret_word_as_md5
+from skrill.settings import get_secret_word_as_md5
 from skrill.models import PaymentRequest, StatusReport
 from skrill.settings import *
 

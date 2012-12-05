@@ -3,7 +3,7 @@ import hashlib
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-from skrill import get_secret_word_as_md5
+from skrill.settings import get_secret_word_as_md5
 from skrill.tests.factories import PaymentRequestFactory
 from skrill.settings import *
 
