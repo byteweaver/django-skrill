@@ -32,5 +32,6 @@ class StatusReportView(View):
         report.validate_md5sig()
         report.valid = True
         report.save()
+        report.send_signal()
         return http.HttpResponse()
 
