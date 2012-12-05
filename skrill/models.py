@@ -259,7 +259,7 @@ class StatusReport(models.Model):
     def transaction_id(self):
         return self.payment_request_id
 
-    def validate_md5sig(self):
+    def generate_md5_signature(self):
         m = hashlib.md5()
         m.update(str(self.merchant_id))
         m.update(str(self.transaction_id))
@@ -267,7 +267,9 @@ class StatusReport(models.Model):
         m.update(str(self.mb_amount))
         m.update(self.mb_currency)
         m.update(str(self.status))
+        return m.hexdigest().upper()
 
-        if m.hexdigest().upper() != self.md5sig:
+    def validate_md5sig(self):
+        if self.generate_md5_signature() != self.md5sig:
             raise StatusReport.InvalidMD5Signature(self)
 
