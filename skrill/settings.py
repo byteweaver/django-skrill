@@ -6,6 +6,7 @@ API_URL = getattr(settings, "SKRILL_API_URL", "https://www.moneybookers.com/app/
 
 # mandatory settings
 PAY_TO_EMAIL = getattr(settings, "SKRILL_PAY_TO_EMAIL", None)
+SECRET_WORD = getattr(settings, "SKRILL_SECRET_WORD", '')
 
 # optional default settings
 RECIPIENT_DESCRIPTION = getattr(settings, "SKRILL_RECIPIENT_DESCRIPTION", None)
