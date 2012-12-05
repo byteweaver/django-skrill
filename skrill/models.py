@@ -203,6 +203,7 @@ class PaymentRequest(models.Model):
 class StatusReport(models.Model):
     # custom fields
     time = models.DateTimeField("Time", auto_now_add=True)
+    valid = models.BooleanField("Valid", default=False)
 
     # Skrill fields
     pay_to_email = models.EmailField("Merchant Email", max_length=50, default=PAY_TO_EMAIL,
