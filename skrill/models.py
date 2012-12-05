@@ -155,6 +155,18 @@ class PaymentRequest(models.Model):
         else:
             return field_value
 
+    def _get_used_custom_fields_as_csv(self):
+        used_custom_fields = []
+        for i in range(1,6):
+            value = getattr(self, "custom_field_%d" % i)
+            if not value is None and value != '':
+                used_custom_fields.append("custom_field_%d" % i)
+
+        if len(used_custom_fields) > 0:
+            return ', '.join(used_custom_fields)
+        else:
+            return ''
+
     def submit(self, force_submit=False):
         """Submit model content to skrill and return session ID on success."""
         assert self.prepare_only == True, "Use this only with prepare_only = True"
@@ -171,6 +183,10 @@ class PaymentRequest(models.Model):
             field_value = getattr(self, field)
             if not field_value is None and field_value != '':
                 data[field] = self._get_formatted_field_value(field)
+
+        used_custom_fields = self._get_used_custom_fields_as_csv()
+        if used_custom_fields != '':
+            data['merchant_fields'] = used_custom_fields
 
         req = urllib2.Request(url=API_URL, data=urllib.urlencode(data))
         res = urllib2.urlopen(req).read()
