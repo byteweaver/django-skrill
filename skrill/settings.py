@@ -23,7 +23,7 @@ def get_secret_word_as_md5():
 
 # optional default settings
 RECIPIENT_DESCRIPTION = getattr(settings, "SKRILL_RECIPIENT_DESCRIPTION", None)
-RETURN_URL = getattr(settings, "SKRILL_RETURN_URL", None)
+RETURN_URL = getattr(settings, "SKRILL_RETURN_URL", reverse_lazy('skrill:return'))
 RETURN_URL_TEXT = getattr(settings, "SKRILL_RETURN_URL_TEXT", None)
 CANCEL_URL = getattr(settings, "SKRILL_CANCEL_URL", reverse_lazy('skrill:cancel'))
 STATUS_URL = getattr(settings, "SKRILL_STATUS_URL", reverse_lazy('skrill:status_report'))
