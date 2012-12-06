@@ -97,7 +97,7 @@ class PaymentRequest(models.Model):
     # payment details
     amount = models.DecimalField("Amount", max_digits=18, decimal_places=2,
         help_text="The total amount payable.")
-    currency = models.CharField("Currency", max_length=3, choices=ISO4217,
+    currency = models.CharField("Currency", max_length=3, choices=ISO4217, default=DEFAULT_CURRENCY,
         help_text="3-letter code of the currency of the amount according to ISO 4217")
     amount2_description = models.CharField("Amount 2 description", max_length=240, blank=True, null=True,
         help_text="Merchant may specify a detailed calculation for the total amount payable. Please note that Skrill (Moneybookers) does not check the validity of these data - they are only displayed in the 'More information' section in the header of the gateway.")

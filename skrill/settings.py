@@ -36,7 +36,7 @@ LANGUAGE = getattr(settings, "SKRILL_LANGUAGE", settings.LANGUAGES[0][0].upper()
 CONFIRMATION_NOTE = getattr(settings, "SKRILL_CONFIRMATION_NOTE", None)
 LOGO_URL = getattr(settings, "SKRILL_LOGO_URL", None)
 DEFAULT_URL_TARGET = getattr(settings, "SKRILL_DEFAULT_URL_TARGET", 1)
-
+DEFAULT_CURRENCY = getattr(settings, "SKRILL_DEFAULT_CURRENCY", None)
 
 URL_TARGET_CHOICES = (
     (1,"_top"),
