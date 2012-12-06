@@ -2,6 +2,11 @@
 import hashlib
 
 from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.utils.functional import lazy
+
+
+reverse_lazy = lazy(reverse, unicode)
 
 # settings that normaly need no change
 API_URL = getattr(settings, "SKRILL_API_URL", "https://www.moneybookers.com/app/payment.pl")
@@ -21,7 +26,7 @@ RECIPIENT_DESCRIPTION = getattr(settings, "SKRILL_RECIPIENT_DESCRIPTION", None)
 RETURN_URL = getattr(settings, "SKRILL_RETURN_URL", None)
 RETURN_URL_TEXT = getattr(settings, "SKRILL_RETURN_URL_TEXT", None)
 CANCEL_URL = getattr(settings, "SKRILL_CANCEL_URL", None)
-STATUS_URL = getattr(settings, "SKRILL_STATUS_URL", None)
+STATUS_URL = getattr(settings, "SKRILL_STATUS_URL", reverse_lazy('skrill:status_report'))
 STATUS_URL2 = getattr(settings, "SKRILL_STATUS_URL2", None)
 NEW_WINDOW_REDIRECT = getattr(settings, "SKRILL_NEW_WINDOW_REDIRECT", False)
 LANGUAGE = getattr(settings, "SKRILL_LANGUAGE", settings.LANGUAGES[0][0].upper())
