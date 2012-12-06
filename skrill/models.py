@@ -192,14 +192,10 @@ class PaymentRequest(models.Model):
             data['merchant_fields'] = used_custom_fields
 
         req = urllib2.Request(url=API_URL, data=urllib.urlencode(data))
-        res = urllib2.urlopen(req).read()
-
-        # Unfortunately Skrill sends HTTP 200 no matter if the request failed or not.
-        # In case of error they reply with one big html page. So we test if the result is a session id with length 32
-        if len(res) != 32:
-            raise Exception(res)
-        else:
-            return "%s?sid=%s" % (API_URL, res)
+        headers = urllib2.urlopen(req).info().headers
+        for header in headers:
+            if "Set-Cookie: SESSION_ID=" in header:
+                return "%s?sid=%s" % (API_URL, header.split(';')[0].replace("Set-Cookie: SESSION_ID=", ""))
 
 
 class StatusReport(models.Model):
