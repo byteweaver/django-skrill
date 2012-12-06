@@ -171,7 +171,7 @@ class PaymentRequest(models.Model):
             return ''
 
     def submit(self, force_submit=False):
-        """Submit model content to skrill and return session ID on success."""
+        """Submit model content to skrill and return redirect url with session ID on success."""
         assert self.prepare_only == True, "Use this only with prepare_only = True"
         assert self.pk != None, "Save PaymentRequest before submitting!"
         if not force_submit:
@@ -193,12 +193,13 @@ class PaymentRequest(models.Model):
 
         req = urllib2.Request(url=API_URL, data=urllib.urlencode(data))
         res = urllib2.urlopen(req).read()
+
         # Unfortunately Skrill sends HTTP 200 no matter if the request failed or not.
         # In case of error they reply with one big html page. So we test if the result is a session id with length 32
         if len(res) != 32:
             raise Exception(res)
         else:
-            return res
+            return "%s?sid=%s" % (API_URL, res)
 
 
 class StatusReport(models.Model):
