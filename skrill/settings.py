@@ -2,11 +2,14 @@
 import hashlib
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.utils.functional import lazy
 
 
-reverse_lazy = lazy(reverse, unicode)
+def get_url(unicode):
+    return "http://%s%s" % (Site.objects.get_current().domain, reverse(unicode))
+get_url_lazy = lazy(get_url, unicode)
 
 # settings that normaly need no change
 API_URL = getattr(settings, "SKRILL_API_URL", "https://www.moneybookers.com/app/payment.pl")
@@ -23,10 +26,10 @@ def get_secret_word_as_md5():
 
 # optional default settings
 RECIPIENT_DESCRIPTION = getattr(settings, "SKRILL_RECIPIENT_DESCRIPTION", None)
-RETURN_URL = getattr(settings, "SKRILL_RETURN_URL", reverse_lazy('skrill:return'))
+RETURN_URL = getattr(settings, "SKRILL_RETURN_URL", get_url_lazy('skrill:return'))
 RETURN_URL_TEXT = getattr(settings, "SKRILL_RETURN_URL_TEXT", None)
-CANCEL_URL = getattr(settings, "SKRILL_CANCEL_URL", reverse_lazy('skrill:cancel'))
-STATUS_URL = getattr(settings, "SKRILL_STATUS_URL", reverse_lazy('skrill:status_report'))
+CANCEL_URL = getattr(settings, "SKRILL_CANCEL_URL", get_url_lazy('skrill:cancel'))
+STATUS_URL = getattr(settings, "SKRILL_STATUS_URL", get_url_lazy('skrill:status_report'))
 STATUS_URL2 = getattr(settings, "SKRILL_STATUS_URL2", None)
 NEW_WINDOW_REDIRECT = getattr(settings, "SKRILL_NEW_WINDOW_REDIRECT", False)
 LANGUAGE = getattr(settings, "SKRILL_LANGUAGE", settings.LANGUAGES[0][0].upper())
