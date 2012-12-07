@@ -287,6 +287,8 @@ class StatusReport(models.Model):
             skrill_status_pending.send(sender=self)
         elif self.status == 2:
             skrill_status_processed.send(sender=self)
+        self.signal_sent = True
+        self.save()
 
 
 skrill_status_chargeback = django.dispatch.Signal()
