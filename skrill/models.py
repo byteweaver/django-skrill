@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.db import models
 import django.dispatch
 
-from skrill.settings import get_secret_word_as_md5
+from multiselectfield import MultiSelectField
+
 from skrill.settings import *
 
 
@@ -132,6 +133,10 @@ class PaymentRequest(models.Model):
     detail5_text = models.CharField("Detail 5 text", max_length=240, blank=True, null=True,
         help_text="The detail5_text is shown next to the detail5_description. The detail5_text is also shown to the client in his history at Skrill (Moneybookers)' website.")
 
+    # other features
+    payment_methods = MultiSelectField("Payment methods", max_length=100, choices=GATEWAY_PAYMENT_CODES, blank=True, null=True,
+        help_text="If no payment method is selected all will be available")
+
     class Meta:
         verbose_name = "Payment request"
         verbose_name_plural = "Payment requests"
@@ -149,7 +154,9 @@ class PaymentRequest(models.Model):
     def _get_formatted_field_value(self, field):
         field_class = self._meta.get_field(field).__class__
         field_value = getattr(self, field)
-        if field_class == models.BooleanField:
+        if field == "payment_methods":
+            return ",".join(field_value)
+        elif field_class == models.BooleanField:
             return self._format_boolean(field_value)
         elif field_class == models.DateField:
             return field_value.strftime("%d%m%Y")
