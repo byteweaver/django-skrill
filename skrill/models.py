@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.db import models
 import django.dispatch
 
-from skrill.settings import get_secret_word_as_md5
+from multiselectfield import MultiSelectField
+
 from skrill.settings import *
 
 
@@ -131,6 +132,10 @@ class PaymentRequest(models.Model):
         help_text="Merchant may show up to 5 details about the product or transfer in the 'More information' section in the header of the gateway.")
     detail5_text = models.CharField("Detail 5 text", max_length=240, blank=True, null=True,
         help_text="The detail5_text is shown next to the detail5_description. The detail5_text is also shown to the client in his history at Skrill (Moneybookers)' website.")
+
+    # other features
+    payment_methods = MultiSelectField("Payment methods", max_length=100, choices=GATEWAY_PAYMENT_CODES, blank=True, null=True,
+        help_text="If no payment method is selected all will be available")
 
     class Meta:
         verbose_name = "Payment request"
