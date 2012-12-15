@@ -154,7 +154,9 @@ class PaymentRequest(models.Model):
     def _get_formatted_field_value(self, field):
         field_class = self._meta.get_field(field).__class__
         field_value = getattr(self, field)
-        if field_class == models.BooleanField:
+        if field == "payment_methods":
+            return ",".join(field_value)
+        elif field_class == models.BooleanField:
             return self._format_boolean(field_value)
         elif field_class == models.DateField:
             return field_value.strftime("%d%m%Y")
