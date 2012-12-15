@@ -122,6 +122,54 @@ ISO4217 = (
     ('TND', 'Tunisian Dinar'),
 )
 
+GATEWAY_PAYMENT_CODES = (
+    ('', 'Moneybookers Wallet'), # ALL
+    ('ACC', 'All Card Types'), # ALL
+    ('VSA', 'Visa'), # ALL
+    ('MSC', 'MasterCard'), # ALL
+    ('VSD', 'Visa Delta/Debit'), # United Kingdom
+    ('VSE', 'Visa Electron'), # ALL
+    ('MAE', 'Maestro'), # United Kingdom, Spain & Austria
+    ('SLO', 'Solo'), # United Kingdom
+    ('AMX', 'American Express'), # ALL
+    ('DIN', 'Diners'), # ALL
+    ('JCB', 'JCB'), # ALL
+    ('LSR', 'Laser'), # Rep. of Ireland
+    ('GCB', 'Carte Bleue'), # France
+    ('DNK', 'Dankort'), # Denmark
+    ('PSP', 'PostePay'), # Italy
+    ('CSI', 'CartaSi'), # Italy
+    ('OBT', 'Online Bank Transfer'), # Germany, United Kingdom, Denmark, Finland, Sweden, Poland, Estonia, Latvia, Lithuania
+    ('GIR', 'Giropay'), # Germany
+    ('DID', 'Direct Debit / ELV'), # Germany
+    ('SFT', 'Sofortueberweisung'), # Germany, Austria, Belgium, Netherlands, Switzerland & United Kingdom
+    ('ENT', 'eNETS'), # Singapore
+    ('EBT', 'Nordea Solo'), # Sweden
+    ('SO2', 'Nordea Solo'), # Finland
+    ('IDL', 'iDEAL'), # Netherlands
+    ('NPY', 'EPS (Netpay)'), # Austria
+    ('PLI', 'POLi'), # Australia
+    ('PWY', 'All Polish Banks'), # Poland
+    ('PWY5', 'ING Bank Śląski'), # Poland
+    ('PWY6', 'PKO BP (PKO Inteligo)'), # Poland
+    ('PWY7', 'Multibank (Multitransfer)'), # Poland
+    ('PWY14', 'Lukas Bank'), # Poland
+    ('PWY15', 'Bank BPH'), # Poland
+    ('PWY17', 'InvestBank'), # Poland
+    ('PWY18', 'PeKaO S.A.'), # Poland
+    ('PWY19', 'Citibank handlowy'), # Poland
+    ('PWY20', 'Bank Zachodni WBK (Przelew24)'), # Poland
+    ('PWY21', 'BGŻ'), # Poland
+    ('PWY22', 'Millenium'), # Poland
+    ('PWY25', 'mBank (mTransfer)'), # Poland
+    ('PWY26', 'Płacę z Inteligo'), # Poland
+    ('PWY28', 'Bank Ochrony Środowiska'), # Poland
+    ('PWY32', 'Nordea'), # Poland
+    ('PWY33', 'Fortis Bank'), # Poland
+    ('PWY36', 'Deutsche Bank PBC S.A.'), # Poland
+    ('EPY', 'ePay.bg'), # Bulgaria
+)
+
 ISO3166_A3 = (
     ('AFG', 'Afghanistan'),
     ('ALA', 'Åland Islands'),
@@ -373,71 +421,71 @@ ISO3166_A3 = (
 )
 
 FAILED_REASON_CODES = (
-	('01', '01 - Referred'),
-	('02', '02 - Invalid Merchant Number'),
-	('03', '03 - Pick-up card'),
-	('04', '04 - Authorisation Declined'),
-	('05', '05 - Other Error'),
-	('06', '06 - CVV is mandatory, but not set or invalid'),
-	('07', '07 - Approved authorisation, honour with identification'),
-	('08', '08 - Delayed Processing'),
-	('09', '09 - Invalid Transaction'),
-	('10', '10 - Invalid Currency'),
-	('11', '11 - Invalid Amount/Available Limit Exceeded/Amount too high'),
-	('12', '12 - Invalid credit card or bank account'),
-	('13', '13 - Invalid Card Issuer'),
-	('14', '14 - Annulation by client'),
-	('15', '15 - Duplicate transaction'),
-	('16', '16 - Acquirer Error'),
-	('17', '17 - Reversal not processed, matching authorisation not found'),
-	('18', '18 - File Transfer not available/unsuccessful'),
-	('19', '19 - Reference number error'),
-	('20', '20 - Access Denied'),
-	('21', '21 - File Transfer failed'),
-	('22', '22 - Format Error'),
-	('23', '23 - Unknown Acquirer'),
-	('24', '24 - Card expired'),
-	('25', '25 - Fraud Suspicion'),
-	('26', '26 - Security code expired'),
-	('27', '27 - Requested function not available'),
-	('28', '28 - Lost/Stolen card'),
-	('29', '29 - Stolen card, Pick up'),
-	('30', '30 - Duplicate Authorisation'),
-	('31', '31 - Limit Exceeded'),
-	('32', '32 - Invalid Security Code'),
-	('33', '33 - Unknown or Invalid Card/Bank account'),
-	('34', '34 - Illegal Transaction'),
-	('35', '35 - Transaction Not Permitted'),
-	('36', '36 - Card blocked in local blacklist'),
-	('37', '37 - Restricted card/bank account'),
-	('38', '38 - Security Rules Violation'),
-	('39', '39 - The transaction amount of the referencing transaction is higher than the transaction amount of the original transaction'),
-	('40', '40 - Transaction frequency limit exceeded, override is possible'),
-	('41', '41 - Incorrect usage count in the Authorisation System exceeded'),
-	('42', '42 - Card blocked'),
-	('43', '43 - Rejected by Credit Card Issuer'),
-	('44', '44 - Card Issuing Bank or Network is not available'),
-	('45', '45 - The card type is not processed by the authorisation centre / Authorisation System has determined incorrect Routing'),
-	('47', '47 - Processing temporarily not possible'),
-	('48', '48 - Security Breach'),
-	('49', '49 - Date / time not plausible, trace-no. not increasing'),
-	('50', '50 - Error in PAC encryption detected'),
-	('51', '51 - System Error'),
-	('52', '52 - MB Denied - potential fraud'),
-	('53', '53 - Mobile verification failed'),
-	('54', '54 - Failed due to internal security restrictions'),
-	('55', '55 - Communication or verification problem'),
-	('56', '56 - 3D verification failed'),
-	('57', '57 - AVS check failed'),
-	('58', '58 - Invalid bank code'),
-	('59', '59 - Invalid account code'),
-	('60', '60 - Card not authorised'),
-	('61', '61 - No credit worthiness'),
-	('62', '62 - Communication error'),
-	('63', '63 - Transaction not allowed for cardholder'),
-	('64', '64 - Invalid Data in Request'),
-	('65', '65 - Blocked bank code'),
-	('66', '66 - CVV2/CVC2 Failure'),
-	('99', '99 - General error'),
+    ('01', '01 - Referred'),
+    ('02', '02 - Invalid Merchant Number'),
+    ('03', '03 - Pick-up card'),
+    ('04', '04 - Authorisation Declined'),
+    ('05', '05 - Other Error'),
+    ('06', '06 - CVV is mandatory, but not set or invalid'),
+    ('07', '07 - Approved authorisation, honour with identification'),
+    ('08', '08 - Delayed Processing'),
+    ('09', '09 - Invalid Transaction'),
+    ('10', '10 - Invalid Currency'),
+    ('11', '11 - Invalid Amount/Available Limit Exceeded/Amount too high'),
+    ('12', '12 - Invalid credit card or bank account'),
+    ('13', '13 - Invalid Card Issuer'),
+    ('14', '14 - Annulation by client'),
+    ('15', '15 - Duplicate transaction'),
+    ('16', '16 - Acquirer Error'),
+    ('17', '17 - Reversal not processed, matching authorisation not found'),
+    ('18', '18 - File Transfer not available/unsuccessful'),
+    ('19', '19 - Reference number error'),
+    ('20', '20 - Access Denied'),
+    ('21', '21 - File Transfer failed'),
+    ('22', '22 - Format Error'),
+    ('23', '23 - Unknown Acquirer'),
+    ('24', '24 - Card expired'),
+    ('25', '25 - Fraud Suspicion'),
+    ('26', '26 - Security code expired'),
+    ('27', '27 - Requested function not available'),
+    ('28', '28 - Lost/Stolen card'),
+    ('29', '29 - Stolen card, Pick up'),
+    ('30', '30 - Duplicate Authorisation'),
+    ('31', '31 - Limit Exceeded'),
+    ('32', '32 - Invalid Security Code'),
+    ('33', '33 - Unknown or Invalid Card/Bank account'),
+    ('34', '34 - Illegal Transaction'),
+    ('35', '35 - Transaction Not Permitted'),
+    ('36', '36 - Card blocked in local blacklist'),
+    ('37', '37 - Restricted card/bank account'),
+    ('38', '38 - Security Rules Violation'),
+    ('39', '39 - The transaction amount of the referencing transaction is higher than the transaction amount of the original transaction'),
+    ('40', '40 - Transaction frequency limit exceeded, override is possible'),
+    ('41', '41 - Incorrect usage count in the Authorisation System exceeded'),
+    ('42', '42 - Card blocked'),
+    ('43', '43 - Rejected by Credit Card Issuer'),
+    ('44', '44 - Card Issuing Bank or Network is not available'),
+    ('45', '45 - The card type is not processed by the authorisation centre / Authorisation System has determined incorrect Routing'),
+    ('47', '47 - Processing temporarily not possible'),
+    ('48', '48 - Security Breach'),
+    ('49', '49 - Date / time not plausible, trace-no. not increasing'),
+    ('50', '50 - Error in PAC encryption detected'),
+    ('51', '51 - System Error'),
+    ('52', '52 - MB Denied - potential fraud'),
+    ('53', '53 - Mobile verification failed'),
+    ('54', '54 - Failed due to internal security restrictions'),
+    ('55', '55 - Communication or verification problem'),
+    ('56', '56 - 3D verification failed'),
+    ('57', '57 - AVS check failed'),
+    ('58', '58 - Invalid bank code'),
+    ('59', '59 - Invalid account code'),
+    ('60', '60 - Card not authorised'),
+    ('61', '61 - No credit worthiness'),
+    ('62', '62 - Communication error'),
+    ('63', '63 - Transaction not allowed for cardholder'),
+    ('64', '64 - Invalid Data in Request'),
+    ('65', '65 - Blocked bank code'),
+    ('66', '66 - CVV2/CVC2 Failure'),
+    ('99', '99 - General error'),
 )
 
