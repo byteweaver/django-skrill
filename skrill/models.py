@@ -44,7 +44,7 @@ class PaymentRequest(models.Model):
         help_text="Second URL to which the transaction details will be posted after the payment process is complete. Alternatively, you may specify an email address to which you would like to receive the results.")
     new_window_redirect = models.BooleanField("New window redirect", default=NEW_WINDOW_REDIRECT,
         help_text="Merchants can choose to redirect customers to the Sofortueberweisung payment method in a new window instead of in the same window.")
-    language = models.CharField("Language", max_length=2, choices=LANGUAGE_CHOICES, default=LANGUAGE,
+    language = models.CharField("Language", max_length=5, choices=LANGUAGE_CHOICES, default=LANGUAGE,
         help_text="2-letter code of the language used for Skrill (Moneybookers)' pages.")
     hide_login = models.BooleanField("Hide login", default=False,
         help_text="Merchants can show their customers the gateway page without the prominent login section.")
