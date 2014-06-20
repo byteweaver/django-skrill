@@ -19,4 +19,3 @@ class StatusReportTestCase(TestCase):
             str(e)
         else:
             raise Exception("test_invalid_md5_signature failed")
-
