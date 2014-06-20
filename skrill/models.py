@@ -309,4 +309,3 @@ skrill_status_failed = django.dispatch.Signal()
 skrill_status_cancelled = django.dispatch.Signal()
 skrill_status_pending = django.dispatch.Signal()
 skrill_status_processed = django.dispatch.Signal()
-
