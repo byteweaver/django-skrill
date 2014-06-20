@@ -284,17 +284,23 @@ class StatusReport(models.Model):
             return
         if self.signal_sent and not force:
             return
-        if self.status == -3:
+        if self.status == -3 or self.status == "-3":
             skrill_status_chargeback.send(sender=self)
-        elif self.status == -2:
+            self.signal_sent = True
+        elif self.status == -2 or self.status == "-2":
             skrill_status_failed.send(sender=self)
-        elif self.status == -1:
+            self.signal_sent = True
+        elif self.status == -1 or self.status == "-1":
             skrill_status_cancelled.send(sender=self)
-        elif self.status == 0:
+            self.signal_sent = True
+        elif self.status == 0 or self.status == "0":
             skrill_status_pending.send(sender=self)
-        elif self.status == 2:
+            self.signal_sent = True
+        elif self.status == 2 or self.status == "2":
             skrill_status_processed.send(sender=self)
-        self.signal_sent = True
+            self.signal_sent = True
+        else:
+            raise Exception("unknown status value %s" % str(self.status))
         self.save()
 
 
