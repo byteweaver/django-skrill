@@ -11,13 +11,13 @@ from skrill.models import PaymentRequest, StatusReport
 from skrill.settings import *
 
 
-class UserFactory(factory.Factory):
+class UserFactory(factory.DjangoModelFactory):
     FACTORY_FOR = User
 
     username = factory.Sequence(lambda n: "Test User %s" % n)
 
 
-class PaymentRequestFactory(factory.Factory):
+class PaymentRequestFactory(factory.DjangoModelFactory):
     FACTORY_FOR = PaymentRequest
 
     user = UserFactory()
@@ -25,7 +25,7 @@ class PaymentRequestFactory(factory.Factory):
     currency = random.choice(ISO4217)[0]
 
 
-class StatusReportFactory(factory.Factory):
+class StatusReportFactory(factory.DjangoModelFactory):
     FACTORY_FOR = StatusReport
 
     pay_to_email = PAY_TO_EMAIL
