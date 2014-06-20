@@ -11,13 +11,13 @@ from skrill.models import PaymentRequest, StatusReport
 from skrill.settings import *
 
 
-class UserFactory(factory.Factory):
+class UserFactory(factory.DjangoModelFactory):
     FACTORY_FOR = User
 
     username = factory.Sequence(lambda n: "Test User %s" % n)
 
 
-class PaymentRequestFactory(factory.Factory):
+class PaymentRequestFactory(factory.DjangoModelFactory):
     FACTORY_FOR = PaymentRequest
 
     user = UserFactory()
@@ -25,7 +25,7 @@ class PaymentRequestFactory(factory.Factory):
     currency = random.choice(ISO4217)[0]
 
 
-class StatusReportFactory(factory.Factory):
+class StatusReportFactory(factory.DjangoModelFactory):
     FACTORY_FOR = StatusReport
 
     pay_to_email = PAY_TO_EMAIL
@@ -40,13 +40,13 @@ class StatusReportFactory(factory.Factory):
     amount = payment_request.amount
     currency = payment_request.currency
 
-    def _generate_md5_signature(self):
-        m = hashlib.md5()
-        m.update(str(self.merchant_id))
-        m.update(str(self.transaction_id))
-        m.update(get_secret_word_as_md5())
-        m.update(str(self.mb_amount))
-        m.update(self.mb_currency)
-        m.update(str(self.status))
-        self.md5sig = m.hexdigest().upper()
 
+def generate_md5_signature(status_report):
+    m = hashlib.md5()
+    m.update(str(status_report.merchant_id))
+    m.update(str(status_report.transaction_id))
+    m.update(get_secret_word_as_md5())
+    m.update(str(status_report.mb_amount))
+    m.update(status_report.mb_currency)
+    m.update(str(status_report.status))
+    return m.hexdigest().upper()
