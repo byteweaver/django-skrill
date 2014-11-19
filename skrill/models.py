@@ -162,6 +162,8 @@ class PaymentRequest(models.Model):
             return field_value.strftime("%d%m%Y")
         elif field_class == models.DecimalField:
             return str(field_value)
+        elif isinstance(field_value, unicode):
+            return field_value.encode('utf8')
         else:
             return field_value
 
