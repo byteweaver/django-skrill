@@ -18,7 +18,6 @@ setup(
     url='https://github.com/byteweaver/django-skrill',
     packages=find_packages(),
     install_requires=[
-        'django',
         'django-multiselectfield',
     ],
     tests_require=[
