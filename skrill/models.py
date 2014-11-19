@@ -169,9 +169,9 @@ class PaymentRequest(models.Model):
 
     def _get_used_custom_fields_as_csv(self):
         used_custom_fields = []
-        for i in range(1,6):
+        for i in range(1, 6):
             value = getattr(self, "custom_field_%d" % i)
-            if not value is None and value != '':
+            if value is not None and value != '':
                 used_custom_fields.append("custom_field_%d" % i)
 
         if len(used_custom_fields) > 0:
@@ -181,10 +181,10 @@ class PaymentRequest(models.Model):
 
     def submit(self, force_submit=False):
         """Submit model content to skrill and return redirect url with session ID on success."""
-        assert self.prepare_only == True, "Use this only with prepare_only = True"
-        assert self.pk != None, "Save PaymentRequest before submitting!"
+        assert self.prepare_only is True, "Use this only with prepare_only = True"
+        assert self.pk is not None, "Save PaymentRequest before submitting!"
         if not force_submit:
-            assert self.submitted == False, "PaymentRequest already submitted!"
+            assert self.submitted is False, "PaymentRequest already submitted!"
         self.submitted = True
         self.save()
 
@@ -193,7 +193,7 @@ class PaymentRequest(models.Model):
             if field in self.SUBMIT_IGNORE_FIELDS:
                 continue
             field_value = getattr(self, field)
-            if not field_value is None and field_value != '':
+            if field_value is not None and field_value != '':
                 data[field] = self._get_formatted_field_value(field)
 
         used_custom_fields = self._get_used_custom_fields_as_csv()
@@ -260,6 +260,7 @@ class StatusReport(models.Model):
     class InvalidMD5Signature(Exception):
         def __init__(self, status_report):
             self.status_report = status_report
+
         def __str__(self):
             return "Invalid MD5 signature in status report #%d" % self.status_report.pk
 
