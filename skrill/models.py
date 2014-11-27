@@ -2,7 +2,7 @@ import hashlib
 import urllib
 import urllib2
 
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 import django.dispatch
 
@@ -10,13 +10,18 @@ from multiselectfield import MultiSelectField
 
 from skrill.settings import *
 
+try:
+    user_model = settings.AUTH_USER_MODEL
+except AttributeError:
+    from django.contrib.auth.models import User as user_model
+
 
 class PaymentRequest(models.Model):
     # list of custom fields that will be ignored upon submit
     SUBMIT_IGNORE_FIELDS = ['user', 'user_id', 'time', 'test', 'submitted', 'statusreport']
 
     # custom stuff
-    user = models.ForeignKey(User, verbose_name="User")
+    user = models.ForeignKey(user_model, verbose_name="User")
     time = models.DateTimeField("Time", auto_now_add=True)
     test = models.BooleanField("Is test", default=False)
     submitted = models.BooleanField("Is submitted", default=False, editable=False)
