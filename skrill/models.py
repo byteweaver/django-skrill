@@ -13,7 +13,7 @@ from skrill.settings import *
 
 class PaymentRequest(models.Model):
     # list of custom fields that will be ignored upon submit
-    SUBMIT_IGNORE_FIELDS = ['user', 'time', 'test', 'submitted', 'statusreport']
+    SUBMIT_IGNORE_FIELDS = ['user', 'user_id', 'time', 'test', 'submitted', 'statusreport']
 
     # custom stuff
     user = models.ForeignKey(User, verbose_name="User")
